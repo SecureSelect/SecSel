@@ -803,7 +803,7 @@ SecureDB::decMsg(GT M, string Msg){
 	AES_set_decrypt_key((const unsigned char *)aes_key_char, 128, &dec_key);
 	AES_cbc_encrypt((const unsigned char *)Msg.c_str(), dec_out, encslength, &dec_key, iv_dec, AES_DECRYPT);
 
-	/** Check with sha256 if the decryption were good */
+	/** Check with sha256 if the decryption is good */
 	string sha_msg((const char *)dec_out);
 	int sm_size = sha_msg.size();
 	if(sm_size<16)
