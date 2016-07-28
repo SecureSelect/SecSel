@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['encryptrows',['EncryptRows',['../classSecureDB.html#ae3c57379e37ba84f2f1bf8a29fba5bf2',1,'SecureDB']]]
+  ['create_5frow',['create_row',['../classSecureSelect.html#ad7d812d5cb93f4a0cd93754532c22fcf',1,'SecureSelect']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadkey',['LoadKey',['../classSecureDB.html#ac4626ebf45db1aeccd1a4698f22d92b5',1,'SecureDB']]]
+  ['gentoken',['GenToken',['../classSecureSelect.html#a88e8f870930dfbeae24d355412b1d0a3',1,'SecureSelect']]]
 ];

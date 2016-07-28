@@ -5,7 +5,7 @@
 #include <fstream>
 
 #include "pairing_3.h"
-#include "ipdb-m.h"
+#include "aoe-m.h"
 
 #include <sys/timeb.h>
 
@@ -28,26 +28,28 @@ int getMilliSpan(int nTimeStart){
 main(int argc, char *argv[]){
 
 	/** Check the number of parameters */
-	if (argc < 5) {
+	if (argc < 6) {
 		/** Tell the user how to run the program */
-		cerr << "Usage: " << argv[0] << " key_file rows encrows noise" << endl;
+		cerr << "Usage: " << argv[0] << " key_file rows encrows noise num_threads" << endl;
         	return 1;
 	}
 
 	/** Set the random seed for noise parameter generation */
 	srand(time(NULL));
 
+	mr_init_threading();
 	PFC pfc(AES_SECURITY);
 
-	SecureDB *db=NULL;
+	SecureSelect *db=NULL;
 
 	int m=0;
 	string key_file(argv[1]);
 	string table_name(argv[2]);
 	string enctable_name(argv[3]);
 	int rand_lim = atoi(argv[4]);
+	int num_threads = atoi(argv[5]);
 
-	db = new SecureDB(&pfc,pfc.order());
+	db = new SecureSelect(&pfc,pfc.order());
 	if(!db->LoadKey(key_file))
 		return 0;
 
@@ -59,7 +61,8 @@ main(int argc, char *argv[]){
 	#ifdef VERBOSE
 	int start = getMilliCount();
 	#endif
-	db->EncryptRows(table_name,enctable_name,rand_lim);
+	db->EncryptRowsMT(table_name,enctable_name,rand_lim, num_threads);
+//	db->EncryptRows(table_name,enctable_name,rand_lim);
 	#ifdef VERBOSE
 	int milliSecondsElapsed = getMilliSpan(start);
 	cout << "\texec time " << milliSecondsElapsed << endl;

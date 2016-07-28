@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['n',['n',['../classSecureDB.html#ae034772516922899c09a0e2790dac008',1,'SecureDB']]]
+  ['msks',['msks',['../classSecureSelect.html#a8f1233a931a2dce84a7f9588721d8301',1,'SecureSelect']]]
 ];

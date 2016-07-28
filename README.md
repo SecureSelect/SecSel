@@ -23,11 +23,12 @@ The following is a typical workflow:
 
 2. **Encrypt rows:**
 
-	run command **EncRow** \<key_file\> \<rows\> \<encrows\> \<noise\>
+	run command **EncRow** \<key_file\> \<rows\> \<encrows\> \<noise\> \<num_threads\>
 	* \<key_file\>:  name of the file that contains the master key to be used for the encryption;
 	* \<rows\>: name of the file that contains the rows to be encrypted;
 	* \<encrows\>: name of the file to which the encrypted rows will be added;
 	* \<noise\>: the noise parameter;
+	* \<num_threads\>: number of threads that will execute the encryption;
 
 
 3. **Token generation:**
@@ -39,17 +40,19 @@ The following is a typical workflow:
 
 4. **Predicate token execution:**
 
-	run command **ApplyPToken** \<token\> \<encrows\> \<results\>
+	run command **ApplyPToken** \<token\> \<encrows\> \<results\> \<num_threads\>
 	* \<token\>: name of the file that contains the token;
 	* \<encrows\>: name of the file that contains the encrypted rows;
-	* \<results\>: name of the file in which the resulting row numbers will be stored.
+	* \<results\>: name of the file in which the resulting row numbers will be stored;
+	* \<num_threads\>: number of threads that will execute the decryption;
 
 5. **Message token execution:**
 
-	run command **ApplyMToken** \<token\> \<encrows\> \<results\>
+	run command **ApplyMToken** \<token\> \<encrows\> \<results\> \<num_threads\>
 	* \<token\>: name of the file that contains the token;
 	* \<encrows\>: name of the file that contains the encrypted rows;
-	* \<results\>: name of the file that contains the row numbers to decrypt.
+	* \<results\>: name of the file that contains the row numbers to decrypt;
+	* \<num_threads\>: number of threads that will execute the decryption.
 
 #### **File formats**
 * **Table format:**
