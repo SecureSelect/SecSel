@@ -5,7 +5,7 @@
 #include <fstream>
 
 #include "pairing_3.h"
-#include "ipdb-m.h"
+#include "aoe-m.h"
 
 #include <sys/timeb.h>
 
@@ -34,15 +34,16 @@ main(int argc, char *argv[]){
         	return 1;
 	}
 
+	mr_init_threading();
 	PFC pfc(AES_SECURITY);
 
-	SecureDB *db=NULL;
+	SecureSelect *db=NULL;
 
 	int m=0;
 	string query_name(argv[1]);
 	string enctable_name(argv[2]);
 
-	db = new SecureDB(&pfc,pfc.order());
+	db = new SecureSelect(&pfc,pfc.order());
 
 	if (!ifstream(query_name+"_ptok")){
 		cout << "Query file doesn't exist" << endl;

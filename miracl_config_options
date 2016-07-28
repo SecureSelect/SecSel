@@ -42,7 +42,10 @@ Do you want a no-heap version of the MIRACL C library? (Y/N)? n
 Do you want support for flash arithmetic? (Y/N)?y
 Do you want stripped-down version (smaller - no error messages) (Y/N)?n
 Do you want multi-threaded version of MIRACL
-Not recommended for program development - read the manual (Y/N)?n
+Not recommended for program development - read the manual (Y/N)?y
+Do you want generic portable threading support (C only - No C++) (Y/N)?n
+Do you want multi-threaded support for C++ in MS Windows (Y/N)?n
+Do you want multi-threaded support for C++ in Unix (Y/N)?y
 Does your development environment support standard screen/keyboard I/O?
 (It doesn't for example in MS Windows, and embedded applications)
 If in doubt, answer Yes (Y/N)?y

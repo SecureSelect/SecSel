@@ -5,7 +5,7 @@
 #include <fstream>
 
 #include "pairing_3.h"
-#include "ipdb-m.h"
+#include "aoe-m.h"
 
 #include <sys/timeb.h>
 
@@ -37,16 +37,17 @@ main(int argc, char *argv[]){
 	/** Set the random seed for noise parameter generation */
 	srand(time(NULL));
 
+	mr_init_threading();
 	PFC pfc(AES_SECURITY);
 
-	SecureDB *db=NULL;
+	SecureSelect *db=NULL;
 
 	int m=0;
 	string key_name(argv[1]);
 	string query_name(argv[2]);
 	int rand_lim = atoi(argv[3]);
 
-	db = new SecureDB(&pfc,pfc.order());
+	db = new SecureSelect(&pfc,pfc.order());
 	if(!db->LoadKey(key_name))
 		return 0;
 
