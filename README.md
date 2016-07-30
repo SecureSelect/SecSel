@@ -74,6 +74,7 @@ The following is a typical workflow:
     file whose first line contains
 	c1#c2#...#cr  
     and subsequent lines contain wi or is empty, if wi is a don't care symbol.
+    Examples are in files 'query_8' and 'query_120'.
 
 
 #### **Noise parameter**

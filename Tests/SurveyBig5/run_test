@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# SurveyBig5
+../../GenKey 8 key_sb5 > GenKey_SB5
+../../EncRow key_sb5 SurveyBig5.csv SurveyBig5 10 4 > EncRow_SB5
+../../GenToken key_sb5 query 10 > GenToken_SB5
+../../ApplyPToken query SurveyBig5 ptok_results 4 > ApplyPToken_SB5
+../../ApplyMToken query SurveyBig5 ptok_results 4 > ApplyMToken_SB5

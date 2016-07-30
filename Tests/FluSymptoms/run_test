@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# FluSymptoms
+../../GenKey 8 key_fs > GenKey_FS
+../../EncRow key_fs FluSymptoms.csv FluSymptoms 100 4 > EncRow_FS
+../../GenToken key_fs query 100 > GenToken_FS
+../../ApplyPToken query FluSymptoms ptok_results 4 > ApplyPToken_FS
+../../ApplyMToken query FluSymptoms ptok_results 4 > ApplyMToken_FS

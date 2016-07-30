@@ -9,7 +9,7 @@
 
 #include <sys/timeb.h>
 
-//#define VERBOSE
+#define VERBOSE
 
 int getMilliCount(){
 	timeb tb;
