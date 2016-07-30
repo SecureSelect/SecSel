@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# join_100k
+../../GenKey 17 key_j100k > GenKey_J100K
+../../EncRow key_j100k join_100k.csv join_100k 100 4 > EncRow_J100K
+../../GenToken key_j100k query 100 > GenToken_J100K
+../../ApplyPToken query join_100k ptok_results 4 > ApplyPToken_J100K
+../../ApplyMToken query join_100k ptok_results 4 > ApplyMToken_J100K
