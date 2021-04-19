@@ -11,26 +11,28 @@
 #include <pthread.h>
 #include <queue> 
 
-//#define VERBOSE
 
-int
-SecureSelect::getMilliCount(){
-	timeb tb;
-	ftime(&tb);
-	int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
-	return nCount;
-}
-
-int
-SecureSelect::getMilliSpan(int nTimeStart){
-	int nSpan = getMilliCount() - nTimeStart;
-	if(nSpan < 0)
-		nSpan += 0x100000 * 1000;
-	return nSpan;
-}
+//int
+//SecureSelect::getMilliCount()
+//{
+	//timeb tb;
+	//ftime(&tb);
+	//int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
+	//return nCount;
+//}
+//
+//int
+//SecureSelect::getMilliSpan(int nTimeStart)
+//{
+	//int nSpan = getMilliCount() - nTimeStart;
+	//if(nSpan < 0)
+		//nSpan += 0x100000 * 1000;
+	//return nSpan;
+//}
 
 OEMsk **
-AOE::Setup(){
+AOE::Setup()
+{
 
 	OEMsk **msks = new OEMsk*[n+1];
 	
@@ -52,7 +54,8 @@ AOE::Setup(){
 }
 
 OECt **
-AOE::Encrypt(OEMsk **msks, Big *X0, Big **X, GT *M){
+AOE::Encrypt(OEMsk **msks, Big *X0, Big **X, GT *M)
+{
 
 	Big y, z1, z2;
 	OECt ** cts = new OECt*[n+1];
@@ -74,7 +77,8 @@ AOE::Encrypt(OEMsk **msks, Big *X0, Big **X, GT *M){
 }
 
 OEKey *
-AOE::PKeyGen(OEMsk **msks, Big *Y){
+AOE::PKeyGen(OEMsk **msks, Big *Y)
+{
 
 	Y[l]=0;
 	oe->len=l+1;
@@ -83,7 +87,8 @@ AOE::PKeyGen(OEMsk **msks, Big *Y){
 }
 
 GT
-AOE::PDecrypt(OECt *C0, OEKey *pkey){
+AOE::PDecrypt(OECt *C0, OEKey *pkey)
+{
 
 	oe->len=l+1;
 
@@ -91,7 +96,8 @@ AOE::PDecrypt(OECt *C0, OEKey *pkey){
 }
 
 OEKey **
-AOE::MKeyGen(OEMsk **msks, Big *Y, Big *Yj, int j){
+AOE::MKeyGen(OEMsk **msks, Big *Y, Big *Yj, int j)
+{
 
 	OEKey **keys = new OEKey*[2];
 	Big lambda1, lambda2;
@@ -111,7 +117,8 @@ AOE::MKeyGen(OEMsk **msks, Big *Y, Big *Yj, int j){
 }
 
 OEKey **
-AOE::MKeyGen(OEMsk **msks, Big *Y, Big **Yj, vector<string> sel_params){
+AOE::MKeyGen(OEMsk **msks, Big *Y, Big **Yj, vector<string> sel_params)
+{
 
 	OEKey **keys = new OEKey*[sel_params.size()+1];
 	Big lambda1, lambda2;
@@ -135,7 +142,8 @@ AOE::MKeyGen(OEMsk **msks, Big *Y, Big **Yj, vector<string> sel_params){
 }
 
 GT 
-AOE::MDecrypt(OECt **cts, OEKey **keys, int j){
+AOE::MDecrypt(OECt **cts, OEKey **keys, int j)
+{
 
 	GT res1,res2;
 
@@ -154,7 +162,8 @@ AOENoise::RSetup(){
 }
 
 OECt **
-AOENoise::EncryptRow(OEMsk **msks, Big *A, GT *M, int rand_lim){
+AOENoise::EncryptRow(OEMsk **msks, Big *A, GT *M, int rand_lim)
+{
 
 	Big X0[l+1], *X[n];
 	Big r = rand()%rand_lim+1;
@@ -175,7 +184,8 @@ AOENoise::EncryptRow(OEMsk **msks, Big *A, GT *M, int rand_lim){
 }
 
 OEKey *
-AOENoise::PKeyGen(OEMsk **msks, Big *Q, int rand_lim){
+AOENoise::PKeyGen(OEMsk **msks, Big *Q, int rand_lim)
+{
 
 	Big Y0[l+1], R[n];
 	Big r = rand()%rand_lim+1;
@@ -198,7 +208,8 @@ AOENoise::PKeyGen(OEMsk **msks, Big *Q, int rand_lim){
 }
 
 OEKey **
-AOENoise::MKeyGen(OEMsk **msks, Big *Q, int j, int rand_lim){
+AOENoise::MKeyGen(OEMsk **msks, Big *Q, int j, int rand_lim)
+{
 
 	Big Y0[l+1], R[n], Yj[k+1];
 	Big r;
@@ -228,7 +239,8 @@ AOENoise::MKeyGen(OEMsk **msks, Big *Q, int j, int rand_lim){
 }
 
 OEKey **
-AOENoise::MKeyGen(OEMsk **msks, Big *Q, vector<string> sel_params, int rand_lim){
+AOENoise::MKeyGen(OEMsk **msks, Big *Q, vector<string> sel_params, int rand_lim)
+{
 
 	Big **Yj;
 	Yj = new Big*[sel_params.size()];
@@ -307,7 +319,8 @@ SecureSelect::saveMsks(string fname, OEMsk **msks)
  * and store them in a file called key_name.
  */
 void
-SecureSelect::KeyGen(string key_name){
+SecureSelect::KeyGen(string key_name)
+{
 	#ifdef VERBOSE
 	int start = getMilliCount();
 	#endif
@@ -325,7 +338,8 @@ SecureSelect::KeyGen(string key_name){
  * Put it in msks variable and return true if everything is ok.
  */
 bool
-SecureSelect::LoadKey(string key_name){
+SecureSelect::LoadKey(string key_name)
+{
 
 	/* Check if key file exists */
 	if (!ifstream(key_name)){
@@ -382,7 +396,8 @@ SecureSelect::LoadKey(string key_name){
 }
 
 vector<string> &
-SecureSelect::split(const string &s, char delim, vector<string> &elems) {
+SecureSelect::split(const string &s, char delim, vector<string> &elems) 
+{
     stringstream ss(s);
     string item;
     while (getline(ss, item, delim)) {
@@ -396,7 +411,8 @@ SecureSelect::split(const string &s, char delim, vector<string> &elems) {
  * Return a vector with all the resulting strings.
  */
 vector<string>
-SecureSelect::split(const string &s, char delim) {
+SecureSelect::split(const string &s, char delim) 
+{
     vector<string> elems;
     split(s, delim, elems);
     return elems;
@@ -582,7 +598,8 @@ SecureSelect::encMsg(GT M, string Msg)
  *
  */
 void
-SecureSelect::EncryptRows(string rows_name, string enctable_name, int rand_lim){
+SecureSelect::EncryptRows(string rows_name, string enctable_name, int rand_lim)
+{
 
 	/* Check if rows file exists */
 	if (!ifstream(rows_name)){
@@ -653,7 +670,8 @@ SecureSelect::EncryptRows(string rows_name, string enctable_name, int rand_lim){
  * return the loaded ciphertext.
  */
 OECt **
-SecureSelect::load_ct(ifstream *inputFile){
+SecureSelect::load_ct(ifstream *inputFile)
+{
 
 	OECt **cts = new OECt*[n+1];
 
@@ -704,7 +722,8 @@ SecureSelect::load_ct(ifstream *inputFile){
  * return the loaded ciphertext.
  */
 OECt **
-SecureSelect::load_ct(fstream *inputFile, int row_num){
+SecureSelect::load_ct(fstream *inputFile, int row_num)
+{
 
 	OECt **cts = new OECt*[n+1];
 
@@ -780,7 +799,8 @@ SecureSelect::get_select_params(string fname)
  * Return the created attribute Y.
  */
 Big *
-SecureSelect::create_query_attribute(string fname){
+SecureSelect::create_query_attribute(string fname)
+{
 
 	Big *Y = new Big[n];
 	fstream inputFile(fname);
@@ -852,7 +872,8 @@ SecureSelect::read_line_from_file(int lnum, string fname)
  * Return the decryption result if the sha256 from Msg conicide with the original one, an empty string othewise.
  */
 string
-SecureSelect::decMsg(GT M, string Msg){
+SecureSelect::decMsg(GT M, string Msg)
+{
 
 	char aes_key_char[128/8];
 
@@ -900,7 +921,8 @@ SecureSelect::decMsg(GT M, string Msg){
  * Write key of length len in fname.
  */
 void
-SecureSelect::save_token(OEKey *key, string fname, int len, int cell){
+SecureSelect::save_token(OEKey *key, string fname, int len, int cell)
+{
 
 	ofstream outputFile;
 	outputFile.open(fname);
@@ -929,7 +951,8 @@ SecureSelect::save_token(OEKey *key, string fname, int len, int cell){
  * Save the created tokens in files.
  */
 int
-SecureSelect::GenToken(string query_name, int rand_lim){
+SecureSelect::GenToken(string query_name, string tokfile, int rand_lim)
+{
 
 	/* Get column numbers to select */
 	vector<string> sel_params = get_select_params(query_name);
@@ -979,8 +1002,8 @@ SecureSelect::GenToken(string query_name, int rand_lim){
 	cout << "\tMessage keys generation time: " << milliSecondsElapsed << endl;
 	#endif
 
-	string ptok_file = query_name+"_ptok";
-	string mtok_file = query_name+"_mtok";
+	string ptok_file = tokfile+".ptk";
+	string mtok_file = tokfile+".mtk";
 
 	int query_num = 0;
 	stringstream ss;
@@ -988,7 +1011,7 @@ SecureSelect::GenToken(string query_name, int rand_lim){
 	string res = ss.str();
 
 	save_token(pkey, ptok_file, l+1, 0);
-	save_token(mkey[0],mtok_file+"_l",l+1,0);
+	save_token(mkey[0],mtok_file+"L",l+1,0);
 	for(int i=1;i<sel_params.size()+1;i++){
 		istringstream(sel_params.at(i-1)) >> j;
 		save_token(mkey[i],res+"_k",k+1,j);
@@ -1006,7 +1029,8 @@ SecureSelect::GenToken(string query_name, int rand_lim){
  * Initialise length and curve parameters.
  */
 void
-SecureSelect::set_parameters(string fname){
+SecureSelect::set_parameters(string fname)
+{
 
 	fstream inputFile(fname);
 	string line;
@@ -1031,7 +1055,8 @@ SecureSelect::set_parameters(string fname){
  * Read token stored in fname and return it.
  */
 OEKey *
-SecureSelect::load_token(string fname, int len){
+SecureSelect::load_token(string fname, int len)
+{
 
 	OEKey *key;
 	ifstream inputFile(fname);
@@ -1065,7 +1090,8 @@ SecureSelect::load_token(string fname, int len){
  * The last parameter is the column for whom the token was generated.
  */
 OEKey *
-SecureSelect::load_token(string fname, int len, vector<int> &sel_par){
+SecureSelect::load_token(string fname, int len, vector<int> &sel_par)
+{
 
 	OEKey *key;
 	ifstream inputFile(fname);
@@ -1096,35 +1122,36 @@ SecureSelect::load_token(string fname, int len, vector<int> &sel_par){
 }
 
 /**
- * Get a token file name (query_name) and the database name (db_name).
+ * Receives a token name (tokName) and an encrypted table name (tableName).
  *
- * Execute the query for the desiderd database
- * and return all the founded results in a vector.
+ * Applies the query encoded by tokName
+ * and returns all selected rows in a vector.
  */
 vector<string>
-SecureSelect::ApplyToken(string query_name,string db_name){
+SecureSelect::ApplyToken(string tokName,string tableName)
+{
 
 	vector<int> sel_params;
 
-	set_parameters(query_name+"_ptok");
+	set_parameters(tokName+".ptk");
 
 	vector<string> results;
 
 	/* Set name for ciphertexts and messages in db */
-	string db_enc_ct = db_name+"_enc_ct";
+	string db_enc_ct = tableName+".ct";
 	int row_num=0;
 
 	OECt **cts;
 	GT r;
-	string db_enc_msgs = db_name+"_enc_msgs";
+	string db_enc_msgs = tableName+".msg";
 	string encoded,decoded;
 
 	/* Predicate key loading */
 	OEKey *pkey;
-	pkey = load_token(query_name+"_ptok", l+1);
+	pkey = load_token(tokName+".ptk", l+1);
 
 	/* Enumerate the message keys */
-	string mtok = query_name+"_mtok";
+	string mtok = tokName+".mtk";
 	int tok_num=0;
 	stringstream ss2;
 	ss2 << mtok << tok_num << "_k";
@@ -1139,7 +1166,7 @@ SecureSelect::ApplyToken(string query_name,string db_name){
 	/* Message keys loading */
 	OEKey **mkey[tok_num];
 
-	OEKey *mkey_l = load_token(mtok+"_l", l+1);
+	OEKey *mkey_l = load_token(mtok+"L", l+1);
 
 	for(int i=0;i<tok_num;i++){
 		stringstream ss;
@@ -1155,7 +1182,7 @@ SecureSelect::ApplyToken(string query_name,string db_name){
 	int n_;
 	while(db_cts >> n_){
 		if(n!=n_){
-			cout << "Db's parameters different from key's" << endl;
+			cout << "Token and encrypted table have different parameters" << endl;
 			return results;
 		}
 
@@ -1204,36 +1231,38 @@ SecureSelect::ApplyToken(string query_name,string db_name){
 }
 
 /**
- * Get a token file name (query_name), the database name (db_name) and the results name (res_name).
+ * Receives a token name (tokName), an encrypted table name (tableName) and result name (resName)
+ * 
  *
- * Execute the ptoken for the desiderd database
- * and save the number of all the founded rows in a file (res_name).
+ * Applies the token to the encrypted table 
+ * and writes the indices of the selected rows in a file 
  */
 int
-SecureSelect::ApplyPToken(string query_name,string db_name, string res_name){
+SecureSelect::ApplyPToken(string tokName ,string tableName, string resName)
+{
 
-	set_parameters(query_name+"_ptok");
+	set_parameters(tokName +".ptk");
 
 	/* Set name for ciphertexts and messages in db */
-	string db_enc_ct = db_name+"_enc_ct";
+	string db_enc_ct = tableName+".ct";
 	int row_num=0;
 
 	OECt **cts;
 	GT dec_res;
-	string db_enc_msgs = db_name+"_enc_msgs";
+	string db_enc_msgs = tableName+".msg";
 	string encoded,decoded;
 
 	/* Predicate key loading */
 	OEKey *pkey;
-	pkey = load_token(query_name+"_ptok", l+1);
+	pkey = load_token(tokName+".ptk", l+1);
 
 	ifstream db_cts(db_enc_ct);
 	int n_, res_num=0;
 	ofstream results;
-	results.open(res_name);
+	results.open(resName);
 	while(db_cts >> n_){
 		if(n!=n_){
-			cout << "Db's parameters different from key's" << endl;
+			cout << "Token and encrypted table have different parameters" << endl;
 			return -1;
 		}
 
@@ -1269,13 +1298,14 @@ SecureSelect::ApplyPToken(string query_name,string db_name, string res_name){
 }
 
 /**
- * Get a token file name (query_name), the database name (db_name) and the results name (res_name).
+ * Receives a token name (tokName), an encrypted table name (tableName) and a file of indices 
  *
  * Execute the mtoken for all the rows in res_name
- * and return all the founded results in a vector.
+ * and returns the results in a vector.
  */
 vector<string>
-SecureSelect::ApplyMToken(string query_name,string db_name, string res_name){
+SecureSelect::ApplyMToken(string tokName,string tableName, string resName)
+{
 
 	vector<int> sel_params;
 	vector<string> results;
@@ -1283,14 +1313,14 @@ SecureSelect::ApplyMToken(string query_name,string db_name, string res_name){
 	GT dec_key;
 	string encoded,decoded;
 
-	set_parameters(query_name+"_mtok_l");
+	set_parameters(tokName+".mtkL");
 
 	/* Set name for ciphertexts and messages in db */
-	string db_enc_ct = db_name+"_enc_ct";
-	string db_enc_msgs = db_name+"_enc_msgs";
+	string db_enc_ct = tableName+".ct";
+	string db_enc_msgs = tableName+".msg";
 
 	/* Enumerate the message keys */
-	string mtok = query_name+"_mtok";
+	string mtok = tokName+".mtk";
 	int tok_num=0;
 	stringstream ss2;
 	ss2 << mtok << tok_num << "_k";
@@ -1305,7 +1335,7 @@ SecureSelect::ApplyMToken(string query_name,string db_name, string res_name){
 	/* Message keys loading */
 	OEKey **mkey[tok_num];
 
-	OEKey *mkey_l = load_token(mtok+"_l", l+1);
+	OEKey *mkey_l = load_token(mtok+"L", l+1);
 
 	for(int i=0;i<tok_num;i++){
 		stringstream ss;
@@ -1317,7 +1347,7 @@ SecureSelect::ApplyMToken(string query_name,string db_name, string res_name){
 		mkey[i][1] = load_token(tok_res+"_k", k+1, sel_params);
 	}
 
-	ifstream res_file(res_name);
+	ifstream res_file(resName);
 	int row_num;
 	fstream db_cts(db_enc_ct);
 	while(res_file >> row_num){
@@ -1474,9 +1504,10 @@ void *encryptRowsThread(void *threadarg)
  * num_threads is the number of threads in which the encryption will be divided.
  */
 void
-SecureSelect::EncryptRowsMT(string rows_name, string enctable_name, int rand_lim, int num_threads){
+SecureSelect::EncryptRowsMT(string rows_name, string enctable_name, int rand_lim, int num_threads)
+{
 
-	/* Check if rows file exists */
+	/* Check if row file exists */
 	if (!ifstream(rows_name)){
 		cout << "Rows file doesn't exist" << endl;
 		return;
@@ -1499,10 +1530,10 @@ SecureSelect::EncryptRowsMT(string rows_name, string enctable_name, int rand_lim
 	struct thread_data td[num_threads];
 
 	/* Set encrypted rows file name */
-	string rows_enc_msgs = enctable_name+"_enc_msgs";
+	string rows_enc_msgs = enctable_name+".msg";
 
 	/* Set ciphertexts file name */
-	string rows_enc_ct = enctable_name+"_enc_ct";
+	string rows_enc_ct = enctable_name+".ct";
 
 	/* Initialize and set thread joinable */
 	pthread_attr_init(&attr);
@@ -1622,7 +1653,7 @@ void *applyPTokenThread(void *threadarg)
 	while(row_num<((my_data->num_lines/my_data->num_threads)*(tid+1))){
 		db_cts >> n_;
 		if(n!=n_){
-			cout << "Db's parameters different from key's" << endl;
+			cout << "Token and encrypted table have different parameters" << endl;
 			
 			pthread_exit(&err);
 		}
@@ -1664,20 +1695,21 @@ void *applyPTokenThread(void *threadarg)
  * num_threads is the number of threads in which the decryption will be divided.
  */
 int
-SecureSelect::ApplyPTokenMT(string query_name,string db_name, string res_name, int num_threads){
+SecureSelect::ApplyPTokenMT(string tokName,string tableName, string resName, int num_threads)
+{
 
-	set_parameters(query_name+"_ptok");
+	set_parameters(tokName+".ptk");
 
 	/* Set name for ciphertexts in db */
-	string db_enc_ct = db_name+"_enc_ct";
+	string db_enc_ct = tableName+".ct";
 	int res_num = 0;
 
 	/* Predicate key loading */
 	OEKey *pkey;
-	pkey = load_token(query_name+"_ptok", l+1);
+	pkey = load_token(tokName+".ptk", l+1);
 
 	/* Counting number of rows in the db */
-	ifstream db_enc_msgs(db_name+"_enc_msgs");
+	ifstream db_enc_msgs(tableName+".msg");
 	string line;
 	int num_lines = 0;
 	while(getline(db_enc_msgs,line))
@@ -1707,7 +1739,7 @@ SecureSelect::ApplyPTokenMT(string query_name,string db_name, string res_name, i
 		td[i].num_threads = num_threads;
 		td[i].num_lines = num_lines;
 		td[i].db_enc_ct = db_enc_ct;
-		td[i].res_name = res_name;
+		td[i].res_name = resName;
 		td[i].pkey = pkey;
 		td[i].sec_sel = this;
 		rc = pthread_create(&threads[i], NULL, applyPTokenThread, (void *)&td[i] );
@@ -1718,7 +1750,7 @@ SecureSelect::ApplyPTokenMT(string query_name,string db_name, string res_name, i
 	}
 
 	/* Free attribute and wait for threads results */
-	ofstream results(res_name);
+	ofstream results(resName);
 	pthread_attr_destroy(&attr);
 	for(int i=0; i < num_threads; i++ ){
 		rc = pthread_join(threads[i], &status);
@@ -1787,7 +1819,8 @@ SecureSelect::ApplyPTokenMT(string query_name,string db_name, string res_name, i
 	return res_num;
 }
 
-void *applyMTokenThread(void *threadarg){
+void *applyMTokenThread(void *threadarg)
+{
 	PFC pfc(AES_SECURITY);
 	vector<string> *results = new vector<string>;
 	int err = -1;
@@ -1852,20 +1885,21 @@ void *applyMTokenThread(void *threadarg){
  * num_threads is the number of threads in which the decryption will be divided.
  */
 vector<string>
-SecureSelect::ApplyMTokenMT(string query_name,string db_name, string res_name, int num_threads){
+SecureSelect::ApplyMTokenMT(string tokName,string dbName, string resName, int num_threads)
+{
 
-	set_parameters(query_name+"_mtok_l");
+	set_parameters(tokName+".mtkL");
 
 	vector<int> sel_params;
 	vector<string> results;
 	string encoded,decoded;
 
 	/* Set name for ciphertexts and messages in db */
-	string db_enc_ct = db_name+"_enc_ct";
-	string db_enc_msgs = db_name+"_enc_msgs";
+	string db_enc_ct = dbName+".ct";
+	string db_enc_msgs = dbName+".msg";
 
 	/* Enumerate the message keys */
-	string mtok = query_name+"_mtok";
+	string mtok = tokName+".mtk";
 	int tok_num=0;
 	stringstream ss2;
 	ss2 << mtok << tok_num << "_k";
@@ -1880,7 +1914,7 @@ SecureSelect::ApplyMTokenMT(string query_name,string db_name, string res_name, i
 	/* Message keys loading */
 	OEKey **mkey[tok_num];
 
-	OEKey *mkey_l = load_token(mtok+"_l", l+1);
+	OEKey *mkey_l = load_token(mtok+"L", l+1);
 
 	for(int i=0;i<tok_num;i++){
 		stringstream ss;
@@ -1893,7 +1927,7 @@ SecureSelect::ApplyMTokenMT(string query_name,string db_name, string res_name, i
 	}
 
 	/* Counting number of rows in the results file */
-	ifstream res_f(res_name);
+	ifstream res_f(resName);
 	string line;
 	int num_res = 0;
 	while(getline(res_f,line))
@@ -1925,7 +1959,7 @@ SecureSelect::ApplyMTokenMT(string query_name,string db_name, string res_name, i
 		td[i].db_enc_msgs = db_enc_msgs;
 		td[i].sel_params = sel_params;
 		td[i].tok_num = tok_num;
-		td[i].res_name = res_name;
+		td[i].res_name = resName;
 		td[i].mkey = mkey;
 		td[i].sec_sel = this;
 		rc = pthread_create(&threads[i], NULL, applyMTokenThread, (void *)&td[i] );
@@ -1958,7 +1992,7 @@ SecureSelect::ApplyMTokenMT(string query_name,string db_name, string res_name, i
 
 	/* Apply mtoken on remaining lines */
 	fstream db_cts(db_enc_ct);
-	ifstream res_file(res_name);
+	ifstream res_file(resName);
 	GotoLine(res_file, num_res);
 	OECt **cts;
 	GT dec_key;

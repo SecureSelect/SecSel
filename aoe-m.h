@@ -4,6 +4,9 @@
 #include "pairing_3.h"
 #include "oe-m.h"
 
+int getMilliCount();
+int getMilliSpan(int nTimeStart);
+
 /**
  * \brief The amortized orthogonal encryption class.
  *
@@ -103,7 +106,7 @@ public:
 	bool LoadKey(string);
 	void EncryptRows(string, string, int);
 	void EncryptRowsMT(string, string, int, int);
-	int GenToken(string, int);
+	int GenToken(string, string, int);
 	vector<string> ApplyToken(string, string);
 	int ApplyPToken(string, string, string);
 	int ApplyPTokenMT(string, string, string, int);

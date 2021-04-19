@@ -11,6 +11,7 @@
 
 #define VERBOSE
 
+#ifdef AAA
 int getMilliCount(){
 	timeb tb;
 	ftime(&tb);
@@ -24,7 +25,9 @@ int getMilliSpan(int nTimeStart){
 		nSpan += 0x100000 * 1000;
 	return nSpan;
 }
+#endif
 
+int
 main(int argc, char *argv[]){
 
 	/** Check the number of parameters */

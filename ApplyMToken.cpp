@@ -7,24 +7,9 @@
 #include "pairing_3.h"
 #include "aoe-m.h"
 
-#include <sys/timeb.h>
-
 #define VERBOSE
 
-int getMilliCount(){
-	timeb tb;
-	ftime(&tb);
-	int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
-	return nCount;
-}
-
-int getMilliSpan(int nTimeStart){
-	int nSpan = getMilliCount() - nTimeStart;
-	if(nSpan < 0)
-		nSpan += 0x100000 * 1000;
-	return nSpan;
-}
-
+int
 main(int argc, char *argv[]){
 
 	/** Check the number of parameters */
@@ -40,19 +25,19 @@ main(int argc, char *argv[]){
 	SecureSelect *db=NULL;
 
 	int m=0;
-	string query_name(argv[1]);
+	string query_name(argv[1]); //should be token name
 	string enctable_name(argv[2]);
 	string results_name(argv[3]);
 	int num_threads = atoi(argv[4]);
 
 	db = new SecureSelect(&pfc,pfc.order());
 
-	if (!ifstream(query_name+"_mtok_l")){
-		cout << "Query file doesn't exist" << endl;
+	if (!ifstream(query_name+".mtkL")){
+		cout << "KKQuery file doesn't exist" << endl;
 		return 0;
 	}
 
-	if (!ifstream(enctable_name+"_enc_msgs")){
+	if (!ifstream(enctable_name+".msg")){
 		cout << "Enctable file doesn't exist" << endl;
 		return 0;
 	}
